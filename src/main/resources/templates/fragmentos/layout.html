@@ -6,7 +6,7 @@
     head(titulo)      -> <head> con fuentes y estilos
     topbar            -> barra superior de la app (con sesion)
     sidebar(activo)   -> menu lateral; "activo" marca la opcion actual
-    footer            -> pie oscuro de la app
+    footer-app        -> pie oscuro de la app
     alertas           -> mensaje de exito que llega por RedirectAttributes
     nav-publica(activo) / footer-publico -> para portada, login y registro
 -->
@@ -92,7 +92,7 @@
 </aside>
 
 <!-- ===================== Pie de la app ===================== -->
-<footer th:fragment="footer" class="footer-app">
+<footer th:fragment="footer-app" class="footer-app">
     <div class="interior">
         <div class="redes">
             <span>Síguenos en redes:</span>
