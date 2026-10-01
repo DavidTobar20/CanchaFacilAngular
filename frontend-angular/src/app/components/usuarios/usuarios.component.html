@@ -1,0 +1,80 @@
+<section class="usuarios-page">
+  <div class="page-header">
+    <div>
+      <h1>Usuarios</h1>
+      <p>Usuarios y administradores registrados en la plataforma.</p>
+    </div>
+    <button class="btn btn-primary" type="button">Nuevo usuario</button>
+  </div>
+
+  <div class="card">
+    <div class="toolbar">
+      <div class="search-box">
+        <span class="icon">⌕</span>
+        <input
+          type="text"
+          [(ngModel)]="filtro"
+          placeholder="Buscar por nombre"
+          aria-label="Buscar usuarios"
+        />
+      </div>
+      <button class="btn btn-secondary" type="button" (click)="limpiarFiltro()" *ngIf="filtro">
+        Limpiar
+      </button>
+    </div>
+
+    @if (usuariosFiltrados.length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">👥</div>
+        <strong>No hay usuarios para mostrar</strong>
+        <p>Prueba con otro nombre.</p>
+      </div>
+    } @else {
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Teléfono</th>
+              <th>Rol</th>
+              <th>Registro</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (usuario of usuariosFiltrados; track usuario.id) {
+              <tr>
+                <td>
+                  <div class="user-cell">
+                    <span class="avatar">{{ usuario.nombre.charAt(0) }}</span>
+                    <div>
+                      <span class="principal">{{ usuario.nombre }}</span>
+                      <span class="secondary">{{ usuario.email }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>{{ usuario.telefono }}</td>
+                <td>
+                  <span
+                    class="badge"
+                    [ngClass]="usuario.rol === 'ADMINISTRADOR' ? 'badge-blue' : 'badge-green'"
+                  >
+                    {{ usuario.rol }}
+                  </span>
+                </td>
+                <td class="muted">{{ usuario.fechaRegistro | date: 'dd MMM yyyy' }}</td>
+                <td>
+                  <div class="actions">
+                    <button class="btn btn-light" type="button">Ver</button>
+                    <button class="btn btn-light" type="button" aria-label="Editar usuario">✎</button>
+                    <button class="btn btn-danger" type="button" aria-label="Eliminar usuario">🗑</button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</section>

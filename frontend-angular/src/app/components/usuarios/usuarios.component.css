@@ -1,0 +1,252 @@
+:host {
+  display: block;
+  width: 100%;
+  color: #1e293b;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.usuarios-page {
+  width: min(1200px, calc(100% - 2rem));
+  margin: 2rem auto;
+  padding: 0 0 2rem;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.page-header p {
+  margin: 0.45rem 0 0;
+  color: #64748b;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  overflow: hidden;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid #f0f2f4;
+  background: #fafbfc;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid #dfe5ec;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  min-width: min(420px, 100%);
+}
+
+.search-box input {
+  border: 0;
+  outline: none;
+  width: 100%;
+  background: transparent;
+  color: #1e293b;
+  font-size: 0.92rem;
+}
+
+.icon {
+  color: #94a3b8;
+  font-size: 1.1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn:hover {
+  filter: brightness(0.98);
+}
+
+.btn-primary {
+  background: #1b5e20;
+  color: #fff;
+  padding: 0.7rem 1.1rem;
+}
+
+.btn-secondary,
+.btn-light {
+  background: #fff;
+  border-color: #dfe5ec;
+  color: #1e293b;
+  padding: 0.6rem 0.8rem;
+}
+
+.btn-danger {
+  background: #fdecea;
+  color: #b42318;
+  border-color: #f7c9c4;
+  padding: 0.6rem 0.8rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.table th {
+  text-align: left;
+  padding: 0.9rem 1.2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #64748b;
+  background: #fafbfc;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.table td {
+  padding: 0.9rem 1.2rem;
+  border-bottom: 1px solid #f0f2f4;
+  color: #334155;
+}
+
+.table tbody tr:hover td {
+  background: #fbfcfb;
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #dff0e3;
+  color: #1b5e20;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.principal {
+  display: block;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.secondary {
+  display: block;
+  margin-top: 0.15rem;
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.28rem 0.64rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.badge-green {
+  background: #eef7f0;
+  color: #1b5e20;
+}
+
+.badge-blue {
+  background: #e8efff;
+  color: #1d4ed8;
+}
+
+.muted {
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  color: #64748b;
+}
+
+.empty-icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 1rem;
+  background: #eef7f0;
+  border-radius: 16px;
+  font-size: 1.6rem;
+}
+
+.empty-state strong {
+  color: #0f172a;
+  font-size: 1.1rem;
+  margin-bottom: 0.35rem;
+}
+
+@media (max-width: 700px) {
+  .search-box {
+    min-width: 100%;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-header {
+    align-items: flex-start;
+  }
+}
