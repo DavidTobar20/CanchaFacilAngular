@@ -12,12 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.Entidades.Espacio;
 import com.example.demo.Entidades.Reserva;
 import com.example.demo.Entidades.Usuario;
-import com.example.demo.Servicios.RecursoNoEncontradoException;
-import com.example.demo.Servicios.ReglaNegocioException;
 import com.example.demo.Repositorios.ReservaRepository;
-import com.example.demo.Servicios.EspacioService;
-import com.example.demo.Servicios.ReservaService;
-import com.example.demo.Servicios.UsuarioService;
 
 @Service
 @Transactional(readOnly = true)

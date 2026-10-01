@@ -8,11 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.Entidades.Espacio;
 import com.example.demo.Entidades.Negocio;
-import com.example.demo.Servicios.RecursoNoEncontradoException;
-import com.example.demo.Servicios.ReglaNegocioException;
 import com.example.demo.Repositorios.EspacioRepository;
-import com.example.demo.Servicios.EspacioService;
-import com.example.demo.Servicios.NegocioService;
 
 @Service
 @Transactional(readOnly = true)

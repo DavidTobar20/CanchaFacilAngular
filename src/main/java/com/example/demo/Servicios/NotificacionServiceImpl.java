@@ -8,11 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.Entidades.Notificacion;
 import com.example.demo.Entidades.Usuario;
-import com.example.demo.Servicios.RecursoNoEncontradoException;
-import com.example.demo.Servicios.ReglaNegocioException;
 import com.example.demo.Repositorios.NotificacionRepository;
-import com.example.demo.Servicios.NotificacionService;
-import com.example.demo.Servicios.UsuarioService;
 
 @Service
 @Transactional(readOnly = true)

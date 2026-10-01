@@ -2,7 +2,6 @@ package com.example.demo.Servicios;
 
 import java.util.List;
 
-import com.example.demo.Servicios.RegistroDTO;
 import com.example.demo.Entidades.Rol;
 import com.example.demo.Entidades.Usuario;
 

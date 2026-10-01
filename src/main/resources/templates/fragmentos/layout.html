@@ -92,7 +92,7 @@
 </aside>
 
 <!-- ===================== Pie de la app ===================== -->
-<footer th:fragment="footer" class="footer-app">
+<th:block th:fragment="footer-base">
     <div class="interior">
         <div class="redes">
             <span>Síguenos en redes:</span>
@@ -100,12 +100,26 @@
             <a href="#" aria-label="Facebook"><th:block th:replace="~{fragmentos/iconos :: icono('facebook')}"></th:block></a>
             <a href="#" aria-label="Twitter"><th:block th:replace="~{fragmentos/iconos :: icono('twitter')}"></th:block></a>
         </div>
+
+        <div class="marca-footer">
+            <span class="isotipo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+            </span>
+            <span>CanchaFácil</span>
+        </div>
+
+        <span class="copy">© 2026 CanchaFácil · Reserva canchas de fútbol fácil, rápido y seguro.</span>
+
         <div class="legales">
             <a href="#">Términos</a>
             <a href="#">Privacidad</a>
             <a href="#">Ayuda</a>
         </div>
     </div>
+</th:block>
+
+<footer th:fragment="footer" class="footer-app">
+    <th:block th:replace="~{fragmentos/layout :: footer-base}"></th:block>
 </footer>
 
 <!-- ===================== Mensajes flash ===================== -->
@@ -147,13 +161,7 @@
 </header>
 
 <footer th:fragment="footer-publico" class="footer-publico">
-    <div class="interior">
-        <a th:replace="~{fragmentos/layout :: marca}"></a>
-        <span>© 2026 CanchaFácil · Reserva canchas de fútbol fácil, rápido y seguro.</span>
-        <div style="display:flex; gap:1.5rem">
-            <a href="#">Términos</a><a href="#">Privacidad</a><a href="#">Ayuda</a>
-        </div>
-    </div>
+    <th:block th:replace="~{fragmentos/layout :: footer-base}"></th:block>
 </footer>
 
 </body>

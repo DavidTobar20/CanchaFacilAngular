@@ -699,22 +699,48 @@ select.control {
     width: 100%;
 }
 
+body.app .footer-publico {
+    display: none !important;
+}
+
+body:not(.app) .footer-app {
+    display: none !important;
+}
+
 .footer-app {
     background: var(--navy);
     color: #cbd5e1;
     font-size: .82rem;
 }
 .footer-app .interior {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
     gap: 1rem;
     padding: 1.1rem 3.7rem;
-    flex-wrap: wrap;
 }
-.footer-app .redes { display: flex; align-items: center; gap: .9rem; }
+.footer-app .redes { display: flex; align-items: center; gap: .9rem; white-space: nowrap; }
 .footer-app .redes a { color: #fff; }
-.footer-app .legales { display: flex; gap: 1.8rem; }
+.footer-app .legales { display: flex; gap: 1.8rem; white-space: nowrap; }
+.footer-app .marca-footer {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.footer-app .marca-footer .isotipo {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    color: #fff;
+}
+.footer-app .copy { color: #cbd5e1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .footer-app a { color: #cbd5e1; }
 .footer-app a:hover { color: #fff; text-decoration: none; }
 
@@ -900,15 +926,35 @@ select.control {
     max-width: 1240px;
     margin: 0 auto;
     padding: 1.6rem 1.5rem;
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+}
+.footer-publico .redes { display: flex; align-items: center; gap: .9rem; white-space: nowrap; }
+.footer-publico .redes a { color: #fff; }
+.footer-publico .legales { display: flex; gap: 1.8rem; white-space: nowrap; }
+.footer-publico .marca-footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
+    gap: .7rem;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    white-space: nowrap;
 }
-.footer-publico .marca { color: #fff; font-size: 1.1rem; }
-.footer-publico .marca .isotipo { border-color: #fff; width: 26px; height: 26px; }
+.footer-publico .marca-footer .isotipo {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    color: #fff;
+}
+.footer-publico .copy { color: #cbd5e1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .footer-publico a { color: #cbd5e1; }
+.footer-publico a:hover { color: #fff; text-decoration: none; }
 
 /* =========================================================================
    Responsive

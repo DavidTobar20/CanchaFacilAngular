@@ -9,11 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.Repositorios.EspacioRankingDTO;
 import com.example.demo.Entidades.Calificacion;
 import com.example.demo.Entidades.Reserva;
-import com.example.demo.Servicios.RecursoNoEncontradoException;
-import com.example.demo.Servicios.ReglaNegocioException;
 import com.example.demo.Repositorios.CalificacionRepository;
-import com.example.demo.Servicios.CalificacionService;
-import com.example.demo.Servicios.ReservaService;
 
 @Service
 @Transactional(readOnly = true)

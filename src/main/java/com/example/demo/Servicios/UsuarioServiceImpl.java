@@ -7,13 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.Servicios.RegistroDTO;
 import com.example.demo.Entidades.Rol;
 import com.example.demo.Entidades.Usuario;
-import com.example.demo.Servicios.RecursoNoEncontradoException;
-import com.example.demo.Servicios.ReglaNegocioException;
 import com.example.demo.Repositorios.UsuarioRepository;
-import com.example.demo.Servicios.UsuarioService;
 
 /**
  * Implementacion de UsuarioService: aqui viven las reglas de negocio de los usuarios.
@@ -89,7 +85,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         String password = usuario.getPassword();
         boolean passwordVacia = password == null || password.isBlank();
-        if (!passwordVacia && password.length() < LONGITUD_MINIMA_PASSWORD) {
+        if (password != null && !password.isBlank() && password.length() < LONGITUD_MINIMA_PASSWORD) {
             throw new ReglaNegocioException("La contrasena debe tener al menos " + LONGITUD_MINIMA_PASSWORD + " caracteres");
         }
 
