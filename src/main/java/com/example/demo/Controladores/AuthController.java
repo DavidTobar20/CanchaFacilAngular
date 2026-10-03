@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.Servicios.RegistroDTO;
+import com.example.demo.DTO.RegistroDTO;
 import com.example.demo.Servicios.ReglaNegocioException;
 import com.example.demo.Servicios.UsuarioService;
 

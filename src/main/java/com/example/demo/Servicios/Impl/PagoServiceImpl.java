@@ -1,4 +1,4 @@
-package com.example.demo.Servicios;
+package com.example.demo.Servicios.Impl;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -8,7 +8,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.Repositorios.IngresoNegocioDTO;
+import com.example.demo.DTO.IngresoNegocioDTO;
 import com.example.demo.Entidades.Pago;
 import com.example.demo.Entidades.Reserva;
 import com.example.demo.Servicios.RecursoNoEncontradoException;

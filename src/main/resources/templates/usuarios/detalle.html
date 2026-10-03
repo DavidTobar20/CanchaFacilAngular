@@ -43,7 +43,7 @@
                 <dl class="datos">
                     <div class="fila"><dt>Reservas</dt><dd class="verde" th:text="${#lists.size(usuario.reservas)}">3</dd></div>
                     <div class="fila"><dt>Calificaciones</dt><dd class="verde" th:text="${#lists.size(usuario.calificaciones)}">2</dd></div>
-                    <div class="fila"><dt>Negocios que administra</dt><dd class="verde" th:text="${#lists.size(usuario.negocios)}">0</dd></div>
+                    <div class="fila"><dt>Negocios que administra</dt><dd class="verde" th:text="${totalNegocios}">0</dd></div>
                 </dl>
             </div>
         </div>

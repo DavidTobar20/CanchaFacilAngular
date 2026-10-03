@@ -2,7 +2,7 @@ package com.example.demo.Servicios;
 
 import java.util.List;
 
-import com.example.demo.Repositorios.IngresoNegocioDTO;
+import com.example.demo.DTO.IngresoNegocioDTO;
 import com.example.demo.Entidades.Pago;
 
 public interface PagoService {

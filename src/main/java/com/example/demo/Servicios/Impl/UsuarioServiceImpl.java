@@ -1,4 +1,4 @@
-package com.example.demo.Servicios;
+package com.example.demo.Servicios.Impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -7,11 +7,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.Servicios.RegistroDTO;
+import com.example.demo.DTO.RegistroDTO;
 import com.example.demo.Entidades.Rol;
 import com.example.demo.Entidades.Usuario;
 import com.example.demo.Servicios.RecursoNoEncontradoException;
 import com.example.demo.Servicios.ReglaNegocioException;
+import com.example.demo.Repositorios.NegocioRepository;
 import com.example.demo.Repositorios.UsuarioRepository;
 import com.example.demo.Servicios.UsuarioService;
 
@@ -31,11 +32,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    // Se usa el repositorio (y no NegocioService) porque NegocioServiceImpl ya depende
+    // de UsuarioService: inyectar el servicio crearia una dependencia circular.
+    private final NegocioRepository negocioRepository;
 
     // Inyeccion de dependencias por constructor.
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder,
+                              NegocioRepository negocioRepository) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
+        this.negocioRepository = negocioRepository;
     }
 
     @Override
@@ -143,6 +149,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional
     public void eliminar(Long id) {
-        usuarioRepository.delete(obtenerPorId(id));
+        Usuario usuario = obtenerPorId(id);
+        // Usuario ya no tiene la lista de negocios (relacion unidireccional), asi que el
+        // cascade no los borra solo: se eliminan primero sus negocios (y con ellos, por
+        // cascade de Negocio, sus espacios) y despues el usuario.
+        negocioRepository.deleteAll(negocioRepository.findByAdministradorId(id));
+        usuarioRepository.delete(usuario);
     }
 }

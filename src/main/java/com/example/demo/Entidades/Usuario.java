@@ -34,8 +34,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "usuarios")
 @Data
-@ToString(exclude = {"negocios", "reservas", "calificaciones", "notificaciones"})
-@EqualsAndHashCode(exclude = {"negocios", "reservas", "calificaciones", "notificaciones"})
+@ToString(exclude = {"reservas", "calificaciones", "notificaciones"})
+@EqualsAndHashCode(exclude = {"reservas", "calificaciones", "notificaciones"})
 @NoArgsConstructor
 @AllArgsConstructor
 public class Usuario {
@@ -86,10 +86,10 @@ public class Usuario {
     @Column(nullable = false, length = 60)
     private String direccion;
 
-    // mappedBy = el dueno de la relacion es el campo "administrador" de Negocio,
-    // o sea la columna administrador_id vive en la tabla negocios.
-    @OneToMany(mappedBy = "administrador", cascade = CascadeType.ALL)
-    private List<Negocio> negocios = new ArrayList<>();
+    // La relacion con Negocio es UNIDIRECCIONAL: solo Negocio conoce a su administrador.
+    // Antes habia aqui una List<Negocio> negocios, pero Usuario -> negocios -> administrador
+    // formaba un ciclo. Los negocios de un usuario se consultan con
+    // NegocioRepository.findByAdministradorId(id).
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Reserva> reservas = new ArrayList<>();

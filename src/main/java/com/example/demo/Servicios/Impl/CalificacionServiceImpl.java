@@ -1,4 +1,4 @@
-package com.example.demo.Servicios;
+package com.example.demo.Servicios.Impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.Repositorios.EspacioRankingDTO;
+import com.example.demo.DTO.EspacioRankingDTO;
 import com.example.demo.Entidades.Calificacion;
 import com.example.demo.Entidades.Reserva;
 import com.example.demo.Servicios.RecursoNoEncontradoException;

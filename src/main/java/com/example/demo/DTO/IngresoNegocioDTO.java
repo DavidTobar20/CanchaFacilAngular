@@ -1,4 +1,4 @@
-package com.example.demo.Repositorios;
+package com.example.demo.DTO;
 
 import java.math.BigDecimal;
 

@@ -1,5 +1,7 @@
 package com.example.demo.Repositorios;
 
+import com.example.demo.DTO.EspacioRankingDTO;
+
 import com.example.demo.Entidades.Calificacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,7 +27,7 @@ public interface CalificacionRepository extends JpaRepository<Calificacion, Long
      * Consulta personalizada (JPQL con constructor): ranking de espacios por
      * promedio de calificacion. "select new" arma un DTO por cada fila.
      */
-    @Query("select new com.example.demo.Repositorios.EspacioRankingDTO("
+    @Query("select new com.example.demo.DTO.EspacioRankingDTO("
             + "e.id, e.nombre, e.tipoDeporte, avg(c.puntuacion), count(c)) "
             + "from Calificacion c join c.espacio e "
             + "group by e.id, e.nombre, e.tipoDeporte "

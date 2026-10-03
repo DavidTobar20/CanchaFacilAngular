@@ -2,7 +2,7 @@ package com.example.demo.Servicios;
 
 import java.util.List;
 
-import com.example.demo.Repositorios.EspacioRankingDTO;
+import com.example.demo.DTO.EspacioRankingDTO;
 import com.example.demo.Entidades.Calificacion;
 
 public interface CalificacionService {

@@ -166,7 +166,9 @@ src/main/java/com/example/demo/
 ├── DemoApplication.java          ← punto de arranque (@SpringBootApplication)
 ├── Entidades/                    ← los datos (Modelo)
 ├── Repositorios/                 ← acceso a datos
-├── Servicios/                    ← reglas de negocio
+├── Servicios/                    ← reglas de negocio (interfaces)
+│   └── Impl/                     ← implementaciones (*ServiceImpl, @Service)
+├── DTO/                          ← objetos de transferencia (RegistroDTO, UsuarioDTO, proyecciones JPQL)
 └── Controladores/                ← atienden al navegador
 
 src/main/resources/
@@ -676,7 +678,7 @@ No se tocó `UsuarioRestController` ni la carpeta `frontend-angular`.
 | # | Requisito | Dónde se evidencia |
 |---|---|---|
 | 1 | Proyecto Spring Boot funcionando con Thymeleaf | Todas las páginas en `templates/`, menú en `fragmentos/cabecera.html` |
-| 2 | Arquitectura en capas | `Controladores/` → `Servicios/` (contratos e implementaciones) → `Repositorios/` → `Entidades/` |
+| 2 | Arquitectura en capas | `Controladores/` → `Servicios/` (contratos) + `Servicios/Impl/` (implementaciones) → `Repositorios/` → `Entidades/` |
 | 3 | Modelo con ≥3 entidades relacionadas | Usuario, Negocio, Espacio, Reserva, Pago, Calificacion, Notificacion (`@ManyToOne`, `@OneToMany`, `@OneToOne`) |
 | 4 | CRUD de una entidad principal | Reservas (y las demás): listar `/reservas`, crear `/reservas/add`, consultar `/reservas/{id}`, editar `/reservas/update/{id}` |
 | 5 | Relación usada realmente | Reserva usa Usuario y Espacio al guardarse; `/reservas/mis-reservas` consulta las reservas del usuario en sesión; Calificacion hereda usuario y espacio de la Reserva; Pago aprobado confirma la Reserva |
@@ -693,12 +695,13 @@ Antes cada servicio era una clase. Ahora:
 ```
 Servicios/
 ├── UsuarioService.java          ← interfaz (contrato)
-├── UsuarioServiceImpl.java      ← @Service con la lógica
+├── Impl/
+│   └── UsuarioServiceImpl.java  ← @Service con la lógica
 ├── DatosIniciales.java          ← carga inicial
 └── ...                          ← servicios de autenticación y excepciones
 ```
 
-Las interfaces y sus implementaciones comparten el paquete `Servicios`; los controladores
+Las interfaces quedan en `Servicios` y sus implementaciones en `Servicios/Impl`; los controladores
 siguen dependiendo de las interfaces (`UsuarioService`, `ReservaService`, etc.).
 
 Cada servicio tiene ahora dos formas de buscar por id:
@@ -713,7 +716,7 @@ Cada servicio tiene ahora dos formas de buscar por id:
 - `Servicios/SesionActual.java`: bean `sesion` para saber quién inició sesión
   (en Thymeleaf: `${@sesion.autenticado}`, `${@sesion.admin}`, `${@sesion.nombre}`).
 - `Controladores/AuthController.java` + `templates/auth/login.html` y `auth/registro.html`.
-- `Servicios/RegistroDTO.java`: datos del formulario de registro (incluye "confirmar contraseña").
+- `DTO/RegistroDTO.java`: datos del formulario de registro (incluye "confirmar contraseña").
 
 Reglas de acceso:
 
@@ -764,7 +767,7 @@ así que el API REST sigue respondiendo igual que antes.
 | `ReservaRepository` | `contarPorEstado()` | `group by` estado | `/consultas` |
 | `EspacioRepository` | `buscarPorRangoDePrecio(min, max)` | `between` sobre el precio | `/consultas` |
 | `CalificacionRepository` | `promedioPorEspacio(id)` | `avg()` de puntuación | Detalle del espacio |
-| `CalificacionRepository` | `rankingDeEspacios()` | `select new EspacioRankingDTO(...)` con `avg` y `count`; proyección en `Repositorios/` | `/consultas` |
+| `CalificacionRepository` | `rankingDeEspacios()` | `select new EspacioRankingDTO(...)` con `avg` y `count`; proyección en `DTO/` | `/consultas` |
 | `PagoRepository` | `ingresosPorNegocio()` | `sum()` de pagos aprobados; proyección en `Repositorios/` | `/consultas` |
 | `NotificacionRepository` | `findByUsuarioIdYNoLeidas(id)` | Notificaciones sin leer | `/notificaciones/no-leidas/{id}` |
 | `UsuarioRepository` | `existsByEmailIgnoreCase(email)` | Consulta derivada | Registro |
@@ -839,3 +842,19 @@ Cada página de la app usa el mismo esqueleto:
 - La campana de la barra superior muestra las notificaciones sin leer (`SesionActual`).
 - Las canchas se muestran como tarjetas con precio y calificación.
 - Tipografías: Plus Jakarta Sans (títulos) e Inter (texto), desde Google Fonts.
+
+## 15. DTOs y reorganización de paquetes
+
+- `DTO/` agrupa todos los objetos de transferencia: `RegistroDTO` (formulario de registro),
+  `UsuarioDTO` (respuesta del API REST) y las proyecciones JPQL `EspacioRankingDTO` e `IngresoNegocioDTO`.
+- `Servicios/Impl/` contiene las implementaciones `*ServiceImpl`; `Servicios/` deja solo interfaces,
+  excepciones, `DatosIniciales`, `SesionActual` y `UsuarioDetallesService`.
+- `UsuarioRestController` ya no devuelve la entidad `Usuario`: la convierte con `UsuarioDTO.desde(...)`.
+  Así el JSON no incluye el password ni las relaciones (que causaban recursión infinita
+  usuario → negocios → administrador → ...).
+- Relación Usuario–Negocio ahora **unidireccional**: se quitó `List<Negocio> negocios` de `Usuario`
+  (solo `Negocio.administrador` conoce la relación), así no hay ciclo usuario → negocios → administrador.
+  - Los negocios de un usuario se consultan con `NegocioRepository.findByAdministradorId(id)`
+    (o `NegocioService.listarPorAdministrador(id)`); `usuarios/detalle.html` usa `${totalNegocios}`.
+  - Como ya no hay cascade desde Usuario, `UsuarioServiceImpl.eliminar()` borra primero los negocios
+    del usuario y después el usuario.

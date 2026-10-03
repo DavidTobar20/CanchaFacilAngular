@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.Entidades.Rol;
 import com.example.demo.Entidades.Usuario;
+import com.example.demo.Servicios.NegocioService;
 import com.example.demo.Servicios.ReglaNegocioException;
 import com.example.demo.Servicios.UsuarioService;
 
@@ -28,9 +29,11 @@ import jakarta.validation.Valid;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final NegocioService negocioService;
 
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, NegocioService negocioService) {
         this.usuarioService = usuarioService;
+        this.negocioService = negocioService;
     }
 
     /** GET /usuarios -> lista completa. */
@@ -106,6 +109,8 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public String detalle(@PathVariable("id") Long id, Model model) {
         model.addAttribute("usuario", usuarioService.obtenerPorId(id));
+        // Usuario ya no tiene getNegocios(): se cuentan desde el servicio de negocios.
+        model.addAttribute("totalNegocios", negocioService.listarPorAdministrador(id).size());
         return "usuarios/detalle";
     }
 
